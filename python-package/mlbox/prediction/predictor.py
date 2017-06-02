@@ -275,8 +275,8 @@ class Predictor():
 
             ### no params : defaut config ###
             if(params is None):
-                print
-                print 'No parameters set. Default configuration is tested'
+                print("")
+                print('No parameters set. Default configuration is tested')
                 set_params = True
 
             else:
@@ -290,14 +290,14 @@ class Predictor():
 
                 try:
                     if(self.verbose):
-                        print
-                        print "fitting the pipeline..."
+                        print("")
+                        print("fitting the pipeline...")
 
                     pp.fit(df['train'], df['target'])
 
                     if(self.verbose):
                         if(cache):
-                            print "pipeline dumped into directory : " + self.to_path+"/joblib"
+                            print("pipeline dumped into directory : " + self.to_path+"/joblib")
                         print("CPU time: %s seconds" % (time.time() - start_time))
 
 
@@ -340,8 +340,8 @@ class Predictor():
 
                     try:
                         if(self.verbose):
-                            print
-                            print "predicting..."
+                            print("")
+                            print("predicting...")
 
                         pred = pd.DataFrame(pp.predict_proba(df['test']),columns = enc.inverse_transform(range(len(enc.classes_))), index = df['test'].index)
                         pred[df['target'].name+"_predicted"] = pred.idxmax(axis=1)
@@ -362,8 +362,8 @@ class Predictor():
 
                     try:
                         if(self.verbose):
-                            print
-                            print "predicting..."
+                            print("")
+                            print("predicting...")
 
                         pred[df['target'].name+"_predicted"] = pp.predict(df['test'])
 
@@ -374,25 +374,25 @@ class Predictor():
                     pass
 
                 if(self.verbose):
-                    print "CPU time: %s seconds" % (time.time() - start_time)
+                    print("CPU time: %s seconds" % (time.time() - start_time))
 
                 ############################################################
                 ######################## Displaying #######################
                 ############################################################
 
                 if(self.verbose):
-                    print
-                    print "top 10 predictions :"
-                    print
-                    print pred.head(10)
+                    print("")
+                    print("top 10 predictions :")
+                    print("")
+                    print(pred.head(10))
 
                 ############################################################
                 #################### dumping predictions ###################
                 ############################################################
 
                 if(self.verbose):
-                    print
-                    print "dumping predictions into directory : "+self.to_path
+                    print("")
+                    print("dumping predictions into directory : "+self.to_path)
 
                 pred.to_csv(self.to_path+"/"+df['target'].name+"_predictions.csv",index=True)
 
