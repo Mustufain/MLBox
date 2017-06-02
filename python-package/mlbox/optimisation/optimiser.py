@@ -257,7 +257,7 @@ class Optimiser():
 
         ### do we need to cache transformers ###
 
-	    cache = False
+        cache = False
 
         if("ce__strategy" in params):
             if(params["ce__strategy"] == "entity_embedding"):
