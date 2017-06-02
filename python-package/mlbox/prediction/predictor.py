@@ -213,11 +213,38 @@ class Predictor():
                 raise ValueError("Impossible to determine the task. Please check that your target is encoded.")
 
 
-            #############################################################
-            ##################### creating the pipeline #################
-            #############################################################
+            ############################################################
+            ##################### creating the pipeline ##################
+            ############################################################
 
             pipe = [("ne",ne),("ce",ce)]
+
+            ### do we need to cache transformers ###
+
+            cache = False
+
+            if("ce__strategy" in params):
+                if(params["ce__strategy"] == "entity_embedding"):
+                    cache = True
+                else:
+                    pass
+            else:
+                pass
+
+            if(fs is not None):
+                if(params["fs__strategy"] != "variance"):
+                    cache = True
+                else:
+                    pass
+            else:
+                pass
+
+            if(len(STCK)!=0):
+                cache = True
+            else:
+                pass
+
+            ### pipeline creation ###
 
             if(fs is not None):
                 pipe.append(("fs",fs))
@@ -228,19 +255,28 @@ class Predictor():
                 pipe.append((stck,STCK[stck]))
 
             pipe.append(("est",est))
-            pp = Pipeline(pipe)
+
+            if(cache):
+                pp = Pipeline(pipe, memory = self.to_path)
+            else:
+                pp = Pipeline(pipe)
 
 
             #############################################################
             #################### fitting the pipeline ###################
             #############################################################
 
+            try:
+                os.mkdir(self.to_path)
+            except OSError:
+                pass
+
             start_time = time.time()
 
             ### no params : defaut config ###
             if(params is None):
-                print()
-                print('No parameters set. Default configuration is tested')
+                print
+                print 'No parameters set. Default configuration is tested'
                 set_params = True
 
             else:
@@ -252,20 +288,17 @@ class Predictor():
 
             if(set_params):
 
-                if(True):
+                try:
                     if(self.verbose):
-                        print()
-                        print("fitting the pipeline...")
+                        print
+                        print "fitting the pipeline..."
 
                     pp.fit(df['train'], df['target'])
 
                     if(self.verbose):
+                        if(cache):
+                            print "pipeline dumped into directory : " + self.to_path+"/joblib"
                         print("CPU time: %s seconds" % (time.time() - start_time))
-
-                    try:
-                        os.mkdir(self.to_path)
-                    except OSError:
-                        pass
 
 
                     ### feature importances ###
@@ -275,9 +308,6 @@ class Predictor():
                     except:
                         pass
 
-
-                try:
-                    pass
                 except:
                     raise ValueError("Pipeline cannot be fitted")
             else:
@@ -310,8 +340,8 @@ class Predictor():
 
                     try:
                         if(self.verbose):
-                            print()
-                            print("predicting...")
+                            print
+                            print "predicting..."
 
                         pred = pd.DataFrame(pp.predict_proba(df['test']),columns = enc.inverse_transform(range(len(enc.classes_))), index = df['test'].index)
                         pred[df['target'].name+"_predicted"] = pred.idxmax(axis=1)
@@ -332,8 +362,8 @@ class Predictor():
 
                     try:
                         if(self.verbose):
-                            print()
-                            print("predicting...")
+                            print
+                            print "predicting..."
 
                         pred[df['target'].name+"_predicted"] = pp.predict(df['test'])
 
@@ -344,25 +374,25 @@ class Predictor():
                     pass
 
                 if(self.verbose):
-                    print("CPU time: %s seconds" % (time.time() - start_time))
+                    print "CPU time: %s seconds" % (time.time() - start_time)
 
                 ############################################################
                 ######################## Displaying #######################
                 ############################################################
 
                 if(self.verbose):
-                    print()
-                    print("top 10 predictions :")
-                    print()
-                    print(pred.head(10))
+                    print
+                    print "top 10 predictions :"
+                    print
+                    print pred.head(10)
 
                 ############################################################
                 #################### dumping predictions ###################
                 ############################################################
 
                 if(self.verbose):
-                    print()
-                    print("dumping predictions into directory : "+self.to_path)
+                    print
+                    print "dumping predictions into directory : "+self.to_path
 
                 pred.to_csv(self.to_path+"/"+df['target'].name+"_predictions.csv",index=True)
 
