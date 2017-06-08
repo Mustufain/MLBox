@@ -223,19 +223,21 @@ class Predictor():
 
             cache = False
 
-            if("ce__strategy" in params):
-                if(params["ce__strategy"] == "entity_embedding"):
-                    cache = True
+            if (params is not None):
+                if("ce__strategy" in params):
+                    if(params["ce__strategy"] == "entity_embedding"):
+                        cache = True
+                    else:
+                        pass
                 else:
                     pass
-            else:
-                pass
 
             if(fs is not None):
-                if(params["fs__strategy"] != "variance"):
-                    cache = True
-                else:
-                    pass
+                if ("fs__strategy" in params):
+                    if(params["fs__strategy"] != "variance"):
+                        cache = True
+                    else:
+                        pass
             else:
                 pass
 
@@ -306,7 +308,7 @@ class Predictor():
                         importance = est.feature_importances()
                         self.__plot_feature_importances(importance, self.to_path+"/"+est.get_params()["strategy"]+"_feature_importance.png")
                     except:
-                        pass
+                        warnings.warn("Unable to get feature importances...")
 
                 except:
                     raise ValueError("Pipeline cannot be fitted")
