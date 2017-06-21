@@ -7,7 +7,24 @@ _It is compatible with:_ __Python 2.7__. (Python 3.3-3.6 very soon...)
 
 _Operating system:_ __Linux__. (MacOS & Windows very soon...)
 
+## Preparation 
 
+First, make sure you have [setuptools](https://pypi.python.org/pypi/setuptools) installed. <br/>
+Since MLBox package contains C++ source code, check that the following requirements are installed, otherwise please proceed below: 
+
+* **[gcc](https://gcc.gnu.org/)** 
+
+.. code-block:: console
+
+    $ sudo apt-get install build-essential
+    
+* **[cmake](https://cmake.org/)** : 
+
+.. code-block:: console
+
+    $ pip install cmake
+    
+    
 ## Stable version
 
 
