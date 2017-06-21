@@ -43,19 +43,21 @@ Since MLBox package contains C++ source code, check that the following requireme
         $ curl  -OL https://github.com/AxeldeRomblay/mlbox/tarball/master
 
 
-* Once you have a copy of the source, **you can install it with:**
+* Once you have a copy of the source, **you can install it:**
 
-.. code-block:: console
+    * Using setup.py: 
+    
+    .. code-block:: console
 
-    $ cd python-package/
-    $ python setup.py install
+        $ cd python-package/
+        $ python setup.py install
 
-Or directly, from the wheel:
+    Or directly, from the wheel:
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ cd python-package/dist/
-    $ pip install *.whl
+        $ cd python-package/dist/
+        $ pip install *.whl
 
 
 .. _Github repo: https://github.com/AxeldeRomblay/mlbox
@@ -74,25 +76,25 @@ If you want, you can have a try:
 * Clone or download sklearn-0.19.dev0 from the github: https://github.com/scikit-learn/scikit-learn
 * Install sklearn-0.19.dev0: 
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ cd scikit-learn-master/
-    $ python setup.py install 
+        $ cd scikit-learn-master/
+        $ python setup.py install 
 
 * Clone or download MLBox-2.3.dev0 from the 'dev' branch. 
 * Install MLBox-2.3.dev0: 
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ cd python-package/
-    $ python setup.py install 
+        $ cd python-package/
+        $ python setup.py install 
 
-or:
+    or:
 
-.. code-block:: console
+    .. code-block:: console
 
-    $ cd python-package/dist/
-    $ pip install *.whl
+        $ cd python-package/dist/
+        $ pip install *.whl
 
 
 
