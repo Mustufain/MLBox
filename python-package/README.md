@@ -28,7 +28,7 @@ Since MLBox package contains C++ source code, check that the following requireme
 ## Stable version
 
 
-The sources for MLBox can be downloaded from the `Github repo`_.
+**The sources for MLBox can be downloaded** from the `Github repo`_.
 
 You can either clone the public repository:
 
@@ -43,7 +43,7 @@ Or download the `tarball`_:
     $ curl  -OL https://github.com/AxeldeRomblay/mlbox/tarball/master
 
 
-Once you have a copy of the source, you can install it with:
+Once you have a copy of the source, **you can install it with:**
 
 .. code-block:: console
 
